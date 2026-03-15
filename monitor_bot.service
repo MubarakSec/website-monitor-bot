@@ -1,0 +1,13 @@
+[Unit]
+Description=Website Monitor Telegram Bot
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/Website_monitor_bot
+ExecStart=/usr/bin/python3 run.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
