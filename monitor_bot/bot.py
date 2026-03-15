@@ -25,8 +25,11 @@ async def add(update: Update, context: ContextTypes.DEFAULT_TYPE):
         url = 'https://' + url
 
     chat_id = update.effective_chat.id
-    await db.add_site(url, chat_id)
-    await update.message.reply_text(f"✅ Added {url} to your monitor list.")
+    added = await db.add_site(url, chat_id)
+    if added:
+        await update.message.reply_text(f"✅ Added {url} to your monitor list.")
+    else:
+        await update.message.reply_text(f"⚠️ {url} is already in your monitor list.")
 
 async def remove(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:

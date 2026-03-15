@@ -21,10 +21,15 @@ async def init_db():
         ''')
         await db.commit()
 
-async def add_site(url: str, chat_id: int):
+async def add_site(url: str, chat_id: int) -> bool:
     async with aiosqlite.connect(DB_PATH) as db:
+        db.row_factory = aiosqlite.Row
+        async with db.execute('SELECT id FROM sites WHERE url = ? AND chat_id = ?', (url, chat_id)) as cursor:
+            if await cursor.fetchone():
+                return False
         await db.execute('INSERT INTO sites (url, chat_id) VALUES (?, ?)', (url, chat_id))
         await db.commit()
+        return True
 
 async def remove_site(url: str, chat_id: int):
     async with aiosqlite.connect(DB_PATH) as db:

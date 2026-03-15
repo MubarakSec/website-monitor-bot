@@ -11,11 +11,14 @@ async def check_site(url: str) -> dict:
                 allow_redirects=True
             ) as response:
                 ms = int((time.monotonic() - start) * 1000)
+                status = "up" if response.status < 400 else "down"
+                error_msg = f"HTTP {response.status}" if status == "down" else None
                 return {
                     "url": url,
-                    "status": "up",
+                    "status": status,
                     "code": response.status,
-                    "ms": ms
+                    "ms": ms,
+                    "error": error_msg
                 }
     except Exception as e:
         return {
