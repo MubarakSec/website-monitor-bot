@@ -30,7 +30,7 @@
 ### 2. Installation
 Clone the repository and install the required dependencies:
 ```bash
-git clone https://github.com/yourusername/website-monitor-bot.git
+git clone https://github.com/MubarakSec/website-monitor-bot.git
 cd website-monitor-bot
 pip install -r monitor_bot/requirements.txt
 ```
